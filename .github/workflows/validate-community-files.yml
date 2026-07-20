@@ -27,6 +27,7 @@ jobs:
             .github/PULL_REQUEST_TEMPLATE.md
             .github/ISSUE_TEMPLATE/bug-report.yml
             .github/ISSUE_TEMPLATE/feature-request.yml
+            .github/dependabot.yml
             .github/workflows/node-ci.yml
           )
           for path in "${required[@]}"; do
