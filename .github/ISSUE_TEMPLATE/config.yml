@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report
+    url: https://github.com/nomo-lang/.github/blob/main/SECURITY.md
+    about: Read the private reporting process before sharing vulnerability details.
+  - name: Language RFCs
+    url: https://github.com/nomo-lang/rfcs
+    about: Propose language, compatibility, manifest, and ecosystem design changes.

@@ -1,0 +1,43 @@
+name: Feature request
+description: Propose a focused improvement or start an RFC discussion
+title: "proposal: "
+labels:
+  - proposal
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Describe the user problem without prescribing implementation first.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed outcome
+      description: Explain the behavior, scope, and why it belongs in Nomo.
+    validations:
+      required: true
+  - type: textarea
+    id: constitution
+    attributes:
+      label: Design Constitution fit
+      description: Address explicitness, complexity, diagnostics, tooling, and the v0.1 loop.
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility and alternatives
+      description: Identify affected syntax/contracts and alternatives considered.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and RFCs.
+          required: true
+        - label: I understand language and compatibility changes may require an RFC.
+          required: true
