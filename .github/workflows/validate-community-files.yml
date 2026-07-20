@@ -1,0 +1,36 @@
+name: Validate community files
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check required files
+        shell: bash
+        run: |
+          set -euo pipefail
+          required=(
+            profile/README.md
+            CONTRIBUTING.md
+            CODE_OF_CONDUCT.md
+            SECURITY.md
+            SUPPORT.md
+            .github/PULL_REQUEST_TEMPLATE.md
+            .github/ISSUE_TEMPLATE/bug-report.yml
+            .github/ISSUE_TEMPLATE/feature-request.yml
+            .github/workflows/node-ci.yml
+          )
+          for path in "${required[@]}"; do
+            test -s "$path"
+          done
+      - name: Check whitespace
+        run: git show --check --oneline --no-renames HEAD
