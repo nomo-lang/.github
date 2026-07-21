@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       working-directory:
-        description: Directory containing package-lock.json
+        description: Directory containing pnpm-lock.yaml
         required: false
         type: string
         default: .
@@ -13,6 +13,11 @@ on:
         required: false
         type: string
         default: "24"
+      pnpm-version:
+        description: pnpm version used to install and run scripts
+        required: false
+        type: string
+        default: "11.15.1"
 
 permissions:
   contents: read
@@ -28,21 +33,26 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: ${{ inputs.pnpm-version }}
+
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
           node-version: ${{ inputs.node-version }}
-          cache: npm
-          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
+          cache: pnpm
+          cache-dependency-path: ${{ inputs.working-directory }}/pnpm-lock.yaml
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: npm run lint --if-present
+        run: pnpm run --if-present lint
 
       - name: Test
-        run: npm test --if-present
+        run: pnpm run --if-present test
 
       - name: Build
-        run: npm run build
+        run: pnpm run build

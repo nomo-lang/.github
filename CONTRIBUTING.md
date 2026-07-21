@@ -50,10 +50,10 @@ truth. Common checks include:
 cargo fmt --all -- --check
 cargo clippy --workspace --all-targets -- -D warnings
 cargo test --workspace
-npm ci
-npm run lint
-npm test
-npm run build
+pnpm install --frozen-lockfile
+pnpm run lint
+pnpm test
+pnpm run build
 ```
 
 Run only the commands relevant to the repository you changed, plus any focused
