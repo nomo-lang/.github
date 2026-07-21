@@ -19,6 +19,7 @@ jobs:
         run: |
           set -euo pipefail
           required=(
+            README.md
             profile/README.md
             CONTRIBUTING.md
             CODE_OF_CONDUCT.md
@@ -33,5 +34,7 @@ jobs:
           for path in "${required[@]}"; do
             test -s "$path"
           done
+      - name: Check repository and organization profiles match
+        run: cmp --silent README.md profile/README.md
       - name: Check whitespace
         run: git show --check --oneline --no-renames HEAD
