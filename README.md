@@ -15,8 +15,8 @@ do not carry a compatibility promise between timestamps.
 - [Read the language and tooling overview](https://github.com/nomo-lang/nomo)
 - [Try the browser playground](https://play.nomo-lang.org)
 - [Review accepted and proposed RFCs](https://github.com/nomo-lang/rfcs)
-- [Download the current preview](https://github.com/nomo-lang/nomo/releases/tag/v0.0.0-20260720080715)
-- [Inspect the release evidence](https://github.com/nomo-lang/rfcs/blob/main/releases/v0.0.0-20260720080715/RELEASE.md)
+- [Download the current preview](https://github.com/nomo-lang/nomo/releases/tag/v0.0.0-20260721120555)
+- [Inspect the release evidence](https://github.com/nomo-lang/rfcs/blob/main/releases/v0.0.0-20260721120555/RELEASE.md)
 
 ```nomo
 package app.main
