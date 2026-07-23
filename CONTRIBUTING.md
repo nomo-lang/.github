@@ -40,6 +40,8 @@ A pull request should:
 The author is responsible for resolving review threads and keeping CI green.
 Development snapshots may use documented release-gate waivers; stable releases
 may not waive compatibility, artifact integrity, or installation verification.
+Every public release must also follow the shared
+[release integrity policy](https://github.com/nomo-lang/.github/blob/main/RELEASING.md).
 
 ## Local validation
 
