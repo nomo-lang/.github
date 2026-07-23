@@ -87,4 +87,3 @@ incidents because removal breaks reproducibility.
 - [ ] Checksums and provenance verify against the public artifacts.
 - [ ] Installation and a representative user flow pass on supported platforms.
 - [ ] Release evidence records all channel outcomes.
-
