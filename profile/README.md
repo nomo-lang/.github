@@ -2,64 +2,140 @@
 
 **Small language. Native programs.**
 
-Nomo is a small, explicit programming language for systems tools,
-command-line programs, and small services. Nomo source is lowered to readable
-C99 and compiled into native executables with the platform C compiler.
+Nomo is an early-preview programming language for command-line tools,
+systems utilities, and controlled services. The compiler lowers Nomo to
+readable C99 and native executables; the browser playground uses the same
+compiler front end with a bounded WebAssembly executor.
 
-The project is in active development. Published snapshots are prereleases and
-do not carry a compatibility promise between timestamps.
+There is no stable `v0.1.0` release. Published `0.0.0-<timestamp>` builds are
+development snapshots, and source, standard-library, manifest, and editor
+contracts may change between snapshots.
 
 ## Start here
 
-- [Visit the Nomo website](https://www.nomo-lang.org)
-- [Read the language and tooling overview](https://github.com/nomo-lang/nomo)
-- [Try the browser playground](https://play.nomo-lang.org)
-- [Review accepted and proposed RFCs](https://github.com/nomo-lang/rfcs)
-- [Download the current preview](https://github.com/nomo-lang/nomo/releases/tag/v0.0.0-20260721120555)
-- [Inspect the release evidence](https://github.com/nomo-lang/rfcs/blob/main/releases/v0.0.0-20260721120555/RELEASE.md)
+- [Website and downloads](https://www.nomo-lang.org)
+- [Install-free playground](https://play.nomo-lang.org)
+- [Compiler, CLI, standard library, and examples](https://github.com/nomo-lang/nomo)
+- [Specifications, RFCs, roadmap, and release evidence](https://github.com/nomo-lang/rfcs)
+- [Shared contribution guide](https://github.com/nomo-lang/.github/blob/main/CONTRIBUTING.md)
+
+Current public download: snapshot
+[`v0.0.0-20260721120555`](https://github.com/nomo-lang/nomo/releases/tag/v0.0.0-20260721120555).
+The syntax shown here was reviewed against compiler commit
+[`6acff2b`](https://github.com/nomo-lang/nomo/commit/6acff2bba0113efa3d49254ec2b9c72e1d442b33).
+Use the snapshot for packaged binaries and the named commit when reproducing
+current `main` behavior.
+
+## Quick start
+
+Install a preview archive for your platform, put `nomo` on `PATH`, then create
+and run a project:
+
+```sh
+nomo --version
+nomo new hello-world
+cd hello-world
+nomo fmt .
+nomo check .
+nomo run .
+```
+
+The scaffold derives the source module root from `[package].name`.
+`hello-world/src/main.nomo` therefore begins:
 
 ```nomo
-package app.main
+package hello_world
 
 import std.io
 
-fn main() -> void {
+fn main() {
     io.println("Hello, Nomo")
 }
 ```
 
-## Toolchain
+No-return declarations omit `-> void`; the `void` type remains available in
+value positions such as `Result<void, E>` and in callable types such as
+`task fn(string) -> void`.
 
-| Project | Purpose |
-| --- | --- |
-| [`nomo`](https://github.com/nomo-lang/nomo) | Compiler, C99 backend, project tooling, package manager, formatter, docs, and standard library |
-| [`nomo-lsp`](https://github.com/nomo-lang/nomo-lsp) | Language server and editor-facing semantic services |
-| [`tree-sitter-nomo`](https://github.com/nomo-lang/tree-sitter-nomo) | Tree-sitter grammar |
-| [`vscode-nomo`](https://github.com/nomo-lang/vscode-nomo) | Visual Studio Code extension |
-| [`zed-nomo`](https://github.com/nomo-lang/zed-nomo) | Zed extension |
-| [`intellij-nomo`](https://github.com/nomo-lang/intellij-nomo) | IntelliJ Platform plugin |
-| [`setup-nomo`](https://github.com/nomo-lang/setup-nomo) | Checksum-verifying GitHub Action installer |
-| [`rfcs`](https://github.com/nomo-lang/rfcs) | Language design, specifications, roadmap, and release policy |
+## Verified preview capabilities
 
-## Design principles
+The current repositories have automated coverage for:
 
-- Nomo is small before it is powerful.
-- Nomo favors explicitness over magic.
-- Nomo has no null and no exceptions.
-- Nomo is immutable by default.
-- Nomo compiles to inspectable native code.
-- Nomo grows through RFCs, examples, and tests.
+- parsing, type checking, formatting, C99 emission, native linking, and CLI
+  project workflows;
+- a WebAssembly compiler/runtime path used by the public playground;
+- packages, workspaces, deterministic lockfiles, vendoring, and registry
+  integrity flows;
+- arrays, ordered maps, generics, interfaces, FFI, structured diagnostics, and
+  direct-style `suspend` with bounded runtime primitives;
+- LSP diagnostics, completion, hover, signatures, navigation, symbols,
+  semantic tokens, formatting, and inlay hints;
+- syntax support for VS Code, IntelliJ Platform, Zed, and Tree-sitter.
 
-Read the complete
-[Nomo Design Constitution](https://github.com/nomo-lang/rfcs/blob/main/DESIGN-CONSTITUTION.md).
+These are implementation and CI claims, not a production-readiness claim.
+Platform coverage, performance, ecosystem depth, API stability, and external
+adoption remain preview gates.
 
-## Contributing
+## Repository map
+
+| Repository | Responsibility | Primary validation |
+| --- | --- | --- |
+| [`nomo`](https://github.com/nomo-lang/nomo) | Compiler, C99/WASM backends, runtime, CLI, formatter, docs, package tooling, standard library | Rust workspace, C99/WASM, examples, release gates |
+| [`nomo-lsp`](https://github.com/nomo-lang/nomo-lsp) | Language server pinned to a compiler revision | Rust tests, Clippy, release gate |
+| [`nomo-playground`](https://github.com/nomo-lang/nomo-playground) | Browser compiler and bounded executor | Vitest, Svelte check, Cloudflare build |
+| [`tree-sitter-nomo`](https://github.com/nomo-lang/tree-sitter-nomo) | Incremental grammar and queries | Grammar corpus and binding tests |
+| [`vscode-nomo`](https://github.com/nomo-lang/vscode-nomo) | VS Code syntax and LSP client | Contract tests, build, VSIX packaging |
+| [`intellij-nomo`](https://github.com/nomo-lang/intellij-nomo) | IntelliJ fallback lexer and LSP integration | Gradle tests and plugin verification |
+| [`zed-nomo`](https://github.com/nomo-lang/zed-nomo) | Zed extension and grammar pin | Rust tests and WASM build |
+| [`setup-nomo`](https://github.com/nomo-lang/setup-nomo) | Checksum-verifying GitHub Action installer | Action tests and smoke workflows |
+| [`www.nomo-lang.org`](https://github.com/nomo-lang/www.nomo-lang.org) | Public website and localized entry docs | Vitest, Svelte check, Cloudflare build |
+| [`rfcs`](https://github.com/nomo-lang/rfcs) | Normative specifications, RFC governance, roadmap, release evidence | Metadata, bilingual sync, links |
+| [`awesome`](https://github.com/nomo-lang/awesome) | Curated ecosystem index | Link and curation review |
+| [`.github`](https://github.com/nomo-lang/.github) | Organization profile, policies, templates, reusable CI | Community-file validation |
+
+## Compatibility and authority
+
+When sources disagree, use this order:
+
+1. accepted English and Chinese specifications in `rfcs`;
+2. accepted RFCs with implementation evidence;
+3. compiler tests and released CLI behavior;
+4. repository READMEs and examples;
+5. the non-normative whitepaper and historical material.
+
+For module roots and canonical no-return declarations, start with
+[RFC 0021](https://github.com/nomo-lang/rfcs/blob/main/en/0021-module-system-imports.md)
+and
+[RFC 0041](https://github.com/nomo-lang/rfcs/blob/main/en/0041-implicit-void-return-omission.md).
+Both remain governed by their separately recorded decision and implementation
+statuses.
+
+## Boundaries
+
+Nomo is suitable for experimentation, compiler/tooling development, and
+controlled preview workloads. Do not infer stable language compatibility,
+production TLS service readiness, unbounded concurrency safety, or mature
+third-party package availability from internal tests alone. Review the
+[release gate](https://github.com/nomo-lang/rfcs/blob/main/RELEASE-GATE.md)
+before making a readiness claim.
+
+## Contributing and releasing
 
 Changes are developed on focused branches and merged through pull requests.
-Code commits and release tags must be signed. Start with the shared
-[contribution guide](https://github.com/nomo-lang/.github/blob/main/CONTRIBUTING.md)
-and then follow the repository-specific checks in the project you are
-changing.
+Code commits and release tags must be signed. Syntax, semantic, manifest,
+diagnostic, or public CLI changes require an RFC before implementation and
+must update affected compiler, LSP, grammar, editor, example, and documentation
+surfaces.
 
-Please report security-sensitive issues using the process in
-[SECURITY.md](https://github.com/nomo-lang/.github/blob/main/SECURITY.md).
+This repository validates its organization entry points with:
+
+```sh
+git show --check --oneline --no-renames HEAD
+cmp --silent README.md profile/README.md
+```
+
+Public releases must follow the shared
+[release integrity policy](https://github.com/nomo-lang/.github/blob/main/RELEASING.md).
+Report sensitive issues through
+[SECURITY.md](https://github.com/nomo-lang/.github/blob/main/SECURITY.md), not a
+public issue.
